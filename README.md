@@ -1,6 +1,6 @@
 # FuzzyBar
 
-[![Tests](https://github.com/gkoch02/fuzzybar/actions/workflows/test.yml/badge.svg)](https://github.com/gkoch02/fuzzybar/actions/workflows/test.yml)
+[![Tests](https://github.com/gkoch02/Fuzzybar/actions/workflows/test.yml/badge.svg)](https://github.com/gkoch02/Fuzzybar/actions/workflows/test.yml)
 
 A tiny native macOS menubar clock that tells the time in words.
 
@@ -39,7 +39,7 @@ builds natively for Apple Silicon, and has no dependencies.
 ## Build and install
 
 ```sh
-git clone https://github.com/gkoch02/fuzzybar.git
+git clone https://github.com/gkoch02/Fuzzybar.git
 cd fuzzybar
 ./build.sh --install
 ```
