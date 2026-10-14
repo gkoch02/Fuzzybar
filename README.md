@@ -40,7 +40,7 @@ builds natively for Apple Silicon, and has no dependencies.
 
 ```sh
 git clone https://github.com/gkoch02/Fuzzybar.git
-cd fuzzybar
+cd Fuzzybar
 ./build.sh --install
 ```
 
