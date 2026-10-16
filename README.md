@@ -2,8 +2,6 @@
   <img src="Assets/banner.png" alt="FuzzyBar: the time, in words. An analogue clock face at twenty to nine beside the wordmark and the menubar phrases for that minute: a blurred 8:40, twenty to nine, zwanzig vor neun, T-20 MINUTES, 0900 HOURS, and morning." width="800">
 </p>
 
-# FuzzyBar
-
 [![Tests](https://github.com/gkoch02/Fuzzybar/actions/workflows/test.yml/badge.svg)](https://github.com/gkoch02/Fuzzybar/actions/workflows/test.yml)
 
 A tiny native macOS menubar clock that tells the time in words.
