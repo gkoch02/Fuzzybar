@@ -1,6 +1,9 @@
 # FuzzyBar
 
 [![Tests](https://github.com/gkoch02/Fuzzybar/actions/workflows/test.yml/badge.svg)](https://github.com/gkoch02/Fuzzybar/actions/workflows/test.yml)
+[![CodeQL](https://github.com/gkoch02/Fuzzybar/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/gkoch02/Fuzzybar/actions/workflows/github-code-scanning/codeql)
+[![macOS 14+](https://img.shields.io/badge/macOS-14%2B-black?logo=apple)](project.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 A tiny native macOS menubar clock that tells the time in words.
 
