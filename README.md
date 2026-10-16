@@ -1,4 +1,6 @@
-# FuzzyBar
+<p align="center">
+  <img src="Assets/banner.png" alt="FuzzyBar: the time, in words. An analogue clock face at twenty to nine beside the wordmark and the menubar phrases for that minute: a blurred 8:40, twenty to nine, zwanzig vor neun, T-20 MINUTES, 0900 HOURS, and morning." width="800">
+</p>
 
 [![Tests](https://github.com/gkoch02/Fuzzybar/actions/workflows/test.yml/badge.svg)](https://github.com/gkoch02/Fuzzybar/actions/workflows/test.yml)
 [![CodeQL](https://github.com/gkoch02/Fuzzybar/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/gkoch02/Fuzzybar/actions/workflows/github-code-scanning/codeql)
@@ -172,8 +174,9 @@ FuzzyBar asks for.
 | `Sources/FuzzyBar/SpecialTimes.swift`, `SpecialTimesSection.swift` | Special times and the New Year's message, and their Preferences list |
 | `Tests/FuzzyBarTests/`, `Tests/BuildScriptTests/` | Swift tests, one file per unit, and the build-script and Xcode-project checks |
 | `Examples/`, `docs/PERSONALITY_FORMAT.md` | An example personality file and the format it follows |
-| `Assets/` | Icon renderer, the generated `.icns`, and the store screenshots (raws plus captioned set) |
+| `Assets/` | Icon renderer, the generated `.icns`, and the store screenshots (raws plus captioned set), and the README banner |
 | `Tools/make_screenshots.py` | Renders the captioned screenshots from the raws |
+| `Tools/make_banner.py` | Renders the README banner |
 | `Tools/check_archive.sh` | Checks an Xcode archive is a Release build of the bumped version |
 | `Resources/` | Asset catalog (app icon) and the privacy manifest for the Xcode build |
 | `build.sh` | Builds, signs, and optionally installs the app bundle |
