@@ -14,7 +14,7 @@ A tiny native macOS menubar clock that tells the time in words.
 </p>
 
 Click it for the exact time, today's date, a month calendar, and a couple of
-menu items. That's the whole app.
+menu items.
 
 **[Get it on the Mac App Store](https://apps.apple.com/us/app/id6813746171)** for
 $0.99, a signed universal build the store installs and keeps updated, or build it
@@ -24,16 +24,14 @@ FuzzyBar exists because the fuzzy clock I'd used for years stopped getting
 updates and still ran under Rosetta. This one is a small amount of Swift,
 builds natively for Apple Silicon, and has no dependencies.
 
-## Features
-
-- Time in words in the menubar, updated when the phrase changes
-- Eight personalities, from plain spoken English to Mission Control, Eldritch, and Vague
-- Popover with the exact time, full date, and a month calendar with week numbers
-- Special times: your own text for a minute of your choosing, daily or yearly
-- Start at login, via the system Login Items list
-- Today's sunrise and sunset in the popover, without asking for your location
-- Your own personalities, written as plain text files and imported
-- No Dock icon, no network, no analytics, nothing running that doesn't need to
+The menubar shows the time in words, updated when the phrase changes, in a
+personality of your choosing, from plain spoken English to Mission Control,
+Eldritch and Vague, or one you wrote yourself as a plain text file. The popover
+holds the exact time, the full date, a month calendar with week numbers, and
+today's sunrise and sunset, worked out without asking for your location. Special
+times let you put your own text on a minute of your choosing, daily or yearly,
+and it can start at login through the system Login Items list. It has no Dock
+icon, uses no network and keeps nothing running it doesn't need.
 
 ## Requirements
 
@@ -61,7 +59,8 @@ point `SIGN_IDENTITY` at it:
 SIGN_IDENTITY="Apple Development: Your Name (TEAMID)" ./build.sh --install
 ```
 
-No certificates, keys, or notarization credentials are stored in this repo.
+The repository holds no signing material; a certificate comes from your own
+keychain.
 
 There is also an Xcode project, `FuzzyBar.xcodeproj`, generated from `project.yml`
 with [XcodeGen](https://github.com/yonaskolb/XcodeGen). It exists for Mac App
@@ -120,7 +119,7 @@ FuzzyBar's own. All shown at 8:40 pm:
 | Mission Control | `T-20 MINUTES, 2100 HOURS` | Mission-control patter; 24-hour numeric time. |
 | Eldritch | `twenty 'fore, the ninth hour` | Cosmic dread; ordinal hours; climaxes with "the stars are right". |
 | Latin | `viginti ante hora IX p.m.` | Roman-numeral hours; real Latin prepositions. |
-| Vague | `evening` | Just the part of the day, from *early* round to *way too late*. |
+| Vague | `evening` | The part of the day, from *early* round to *way too late*. |
 
 <p align="center">
   <img src="Assets/screenshots/strips/personalities.png" width="432" alt="Eight menubar strips stacked, one per personality. The first seven at 8:44 am: quarter to nine; quarter to nine am; a quarter ’fore nine of the clock; viertel vor neun; T-15 MINUTES, 0900 HOURS; quarter ’fore, the ninth hour; quadrans ante hora IX a.m. The last, Vague, at 3:50 pm: afternoon.">
