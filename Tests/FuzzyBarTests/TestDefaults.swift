@@ -3,7 +3,10 @@ import XCTest
 extension XCTestCase {
     /// A UserDefaults suite of the test's own, removed when the test ends.
     func scratchDefaults() -> UserDefaults {
-        let suite = "FuzzyBarTests.\(UUID().uuidString)"
+        // A path, not a name: a named suite leaves an empty plist in
+        // ~/Library/Preferences even after removePersistentDomain.
+        let suite = FileManager.default.temporaryDirectory
+            .appendingPathComponent("FuzzyBarTests.\(UUID().uuidString)").path
         addTeardownBlock { UserDefaults(suiteName: suite)?.removePersistentDomain(forName: suite) }
         return UserDefaults(suiteName: suite)!
     }
