@@ -1,6 +1,10 @@
 import Combine
 import ServiceManagement
 
+/// The Start at Login switch, backed by the system Login Items list. macOS
+/// can leave a registration waiting for the user's approval in System
+/// Settings, so the status is read back after every change rather than
+/// assumed. The calls are injectable so tests needn't touch the real list.
 @MainActor
 final class LoginSettings: ObservableObject {
     @Published private(set) var status: SMAppService.Status
@@ -18,7 +22,7 @@ final class LoginSettings: ObservableObject {
         status = readStatus()
     }
 
-    // The toggle represents the requested registration, including pending approval.
+    /// What the toggle shows: on once registration is asked for, approved or not.
     var isRequested: Bool { status == .enabled || status == .requiresApproval }
 
     func refresh() { status = readStatus() }

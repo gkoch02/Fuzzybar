@@ -78,9 +78,9 @@ use `{hour} {phrase}`. Anything else in it, like `, arr`, is kept as written.
   text.
 - **Mistakes are reported by line,** for example *Line 14: :07 isn't one of
   the minutes* or *The file needs a line for :40.*
-- **Length.** The menubar has room for about 30 characters before the
-  notch on some MacBooks hides the rest. FuzzyBar imports longer ones, but
-  says which reading is longest.
+- **Length.** On MacBooks with a notch, a long reading can end up behind
+  it. FuzzyBar imports long ones anyway, but says which reading is longest
+  and how many characters it is.
 - **Special times** still win: at a special time, and at the first minute
   of the year, the menubar shows that instead.
 - **Removing** one goes back to the built-in personality you had before.
