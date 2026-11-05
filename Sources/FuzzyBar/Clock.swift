@@ -80,6 +80,8 @@ final class Clock: ObservableObject {
     /// Search actual minute boundaries so DST and non-whole-hour time zones work.
     /// Special times last one minute, so they show up here as a change at
     /// their start and another at their end, like any phrase boundary.
+    /// It looks five minutes ahead, the length of a slot; a phrase that holds
+    /// longer, like Vague's, is simply looked at again on the next wake.
     static func nextTick(after date: Date, popoverVisible: Bool, calendar: Calendar = .current,
                          personality: Personality = .default, custom: CustomPersonality? = nil,
                          specialTimes: [SpecialTime] = []) -> Date {

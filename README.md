@@ -69,6 +69,17 @@ Store archives (App Sandbox, automatic signing, the asset-catalog icon). After
 Debug archive or a build number the project has moved past.
 Day-to-day builds and tests still go through SwiftPM and `build.sh`.
 
+## Tests
+
+```sh
+swift test
+python3 -m unittest discover -s Tests/BuildScriptTests
+```
+
+The first runs the Swift tests; the second checks `build.sh` and that the
+Xcode project matches the files on disk. The build-script tests need macOS
+and skip elsewhere.
+
 ## How the fuzzy time works
 
 Minutes are rounded to the nearest five, then mapped to the usual spoken
@@ -86,8 +97,8 @@ switch that to typed-in coordinates, or hide the two lines. At midnight sun or
 polar night the popover says the sun doesn't set or doesn't rise today.
 
 The arithmetic is NOAA's simplified solar-position equations, ported from
-LittleFuzzyClock and good to a minute or two. The zone-to-city table, and
-the old names that still point at a city (US/Eastern, Asia/Calcutta), are
+LittleFuzzyClock. The zone-to-city table, and the old names that still point
+at a city (US/Eastern, Asia/Calcutta), are
 generated from an IANA tzdata release's `zone.tab` and `backward` by
 `Tools/make_zone_locations.py` and compiled in; the script's docstring has the
 download steps.
@@ -97,8 +108,8 @@ download steps.
 Preferences has a list of special times: a minute, either every day or one
 day a year, and what the menubar should say then ("pi o'clock" at 3:14). It
 replaces the phrase for that one minute in every personality, then the usual
-phrase comes back. Text is capped at 30 characters so it stays clear of the
-notch on MacBooks that have one.
+phrase comes back. Text is cut short enough to stay clear of the notch on
+MacBooks that have one.
 
 One is built in: the first minute of the year reads *Happy New Year!* A
 special time of your own for 12:00 am on January 1 takes its place.
@@ -106,9 +117,9 @@ special time of your own for 12:00 am on January 1 takes its place.
 ## Personalities
 
 Preferences has a Personality picker. The default is the spoken English above;
-six of the others are ported from
-[LittleFuzzyClock](https://github.com/gkoch02/LittleFuzzyClock), and Vague is
-FuzzyBar's own. All shown at 8:40 pm:
+Vague is FuzzyBar's own, and the rest are ported from
+[LittleFuzzyClock](https://github.com/gkoch02/LittleFuzzyClock). All shown at
+8:40 pm:
 
 | Personality | 8:40 pm reads | Notes |
 | --- | --- | --- |
@@ -125,23 +136,13 @@ FuzzyBar's own. All shown at 8:40 pm:
   <img src="Assets/screenshots/strips/personalities.png" width="432" alt="Eight menubar strips stacked, one per personality. The first seven at 8:44 am: quarter to nine; quarter to nine am; a quarter ’fore nine of the clock; viertel vor neun; T-15 MINUTES, 0900 HOURS; quarter ’fore, the ninth hour; quadrans ante hora IX a.m. The last, Vague, at 3:50 pm: afternoon.">
 </p>
 
-Vague ignores the minutes and names the part of the day: *way too late*
-until 5, then *early*, *morning* from 7, *around noon* from 11:30, *after
-lunch* from 1, *afternoon* from 3, *evening* from 6, and *late* from 9.
+Vague ignores the minutes and names the part of the day, changing on the
+exact minute each part starts.
 
-The six ported personalities share LittleFuzzyClock's twelve-slot table, so
+The ported personalities share LittleFuzzyClock's twelve-slot table, so
 minutes 58 and 59 stay on its last slot (Classic's "almost nine pm") rather than
 turning to the hour the way the spoken default does. The phrase tables live in
-`Sources/FuzzyBar/Personality.swift`.
-
-The logic lives in `Sources/FuzzyBar/FuzzyTime.swift` and is covered by tests:
-
-```sh
-swift test
-python3 -m unittest discover -s Tests/BuildScriptTests
-```
-
-The build-script tests need macOS and skip elsewhere.
+`Sources/FuzzyBar/Personality.swift`, Vague's parts of the day included.
 
 ## Your own personalities
 
@@ -162,7 +163,7 @@ FuzzyBar asks for.
 | --- | --- |
 | `Sources/FuzzyBar/FuzzyBarApp.swift` | App entry point and the menubar popover |
 | `Sources/FuzzyBar/FuzzyTime.swift` | Time-to-words conversion |
-| `Sources/FuzzyBar/Personality.swift` | The eight phrasing personalities |
+| `Sources/FuzzyBar/Personality.swift` | The built-in phrasing personalities |
 | `Sources/FuzzyBar/Clock.swift` | Phrase-boundary ticker (minute updates while the popover is open) and special times |
 | `Sources/FuzzyBar/CalendarView.swift`, `CalendarGrid.swift` | The popover's month calendar and the six weeks it shows |
 | `Sources/FuzzyBar/Sun.swift`, `SunSettings.swift`, `SunView.swift` | Sunrise and sunset: the equations, the location setting, the popover lines |

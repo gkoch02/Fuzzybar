@@ -119,7 +119,7 @@ final class PersonalityTests: XCTestCase {
     }
 
     /// Every minute of the day reads one of the parts, and the parts come
-    /// round in order with no gaps: eight changes a day, one per part.
+    /// round in order with no gaps: one change a day per part.
     func testVagueCoversTheDayInOrder() {
         let parts = Personality.vagueParts
         XCTAssertEqual(parts.first?.start, 0)

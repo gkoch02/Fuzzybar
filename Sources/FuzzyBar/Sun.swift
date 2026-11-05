@@ -1,7 +1,7 @@
 import Foundation
 
 /// Sunrise and sunset from NOAA's simplified solar-position equations, ported
-/// from LittleFuzzyClock's sun.py. Good to about a minute outside the polar
+/// from LittleFuzzyClock's sun.py. Good to a couple of minutes outside the polar
 /// regions, which is far finer than the location FuzzyBar has to go on.
 enum Sun {
     enum Day: Equatable {

@@ -42,18 +42,7 @@ struct CustomPersonality: Codable, Equatable, Identifiable {
 
 /// A .fuzzybar file is plain text meant for TextEdit: every line says which
 /// time it's for, so there's no quoting to get wrong and nothing to look up.
-///
-///     name: Pirate
-///     format: {phrase} {hour}, arr
-///     next hour from: :35
-///     :00  smack on
-///     ...
-///     :55  nigh on
-///     12  twelve
-///     1   one
-///     ...
-///
-/// Blank lines and lines starting with # are ignored.
+/// docs/PERSONALITY_FORMAT.md is the format as users see it.
 extension CustomPersonality {
     enum ImportError: LocalizedError, Equatable {
         case notText
