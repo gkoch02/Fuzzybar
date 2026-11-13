@@ -66,9 +66,11 @@ struct SettingsView: View {
 
             Divider()
 
-            Text("© 2026 Gregory M Koch. Made with love and no Rosetta.")
+            Text("© 2026 Gregory M Koch\nMade with love and no Rosetta.")
                 .font(.caption2)
                 .foregroundStyle(.tertiary)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .padding(24)
         .frame(width: 320)
