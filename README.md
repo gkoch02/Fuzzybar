@@ -26,7 +26,8 @@ builds natively for Apple Silicon, and has no dependencies.
 
 The menubar shows the time in words, updated when the phrase changes, in a
 personality of your choosing, from plain spoken English to Mission Control,
-Eldritch and Vague, or one you wrote yourself as a plain text file. The popover
+Eldritch and Vague, or one you wrote yourself as a plain text file, with the
+date beside it if you want one. The popover
 holds the exact time, the full date, a month calendar with week numbers, and
 today's sunrise and sunset, worked out without asking for your location. Special
 times let you put your own text on a minute of your choosing, daily or yearly,
@@ -114,6 +115,14 @@ MacBooks that have one.
 One is built in: the first minute of the year reads *Happy New Year!* A
 special time of your own for 12:00 am on January 1 takes its place.
 
+## The date
+
+Preferences can put the date in the menubar, before or after the time: the
+weekday, the month and day, the numbers in your Mac's own order, or spoken
+("Friday the thirteenth"). It is off to begin with, since a long date beside
+a long phrase may not fit next to the notch on MacBooks that have one. At a
+special time the date stays where it is.
+
 ## Personalities
 
 Preferences has a Personality picker. The default is the spoken English above;
@@ -172,6 +181,7 @@ FuzzyBar asks for.
 | `Sources/FuzzyBar/CustomPersonality.swift`, `PersonalitySection.swift` | Personality files: the format, templates, and the Preferences picker with Import and Save |
 | `Sources/FuzzyBar/PersonalityStore.swift` | The chosen personality and imported ones, saved between launches |
 | `Sources/FuzzyBar/SpecialTimes.swift`, `SpecialTimesSection.swift` | Special times and the New Year's message, and their Preferences list |
+| `Sources/FuzzyBar/DateDisplay.swift`, `DateSection.swift` | The date beside the time: its styles and side, and their Preferences controls |
 | `Tests/FuzzyBarTests/`, `Tests/BuildScriptTests/` | Swift tests, one file per unit, and the build-script and Xcode-project checks |
 | `docs/CODE_TOUR.md` | A walk through the code for newcomers: one minute from the timer to the menubar |
 | `Examples/`, `docs/PERSONALITY_FORMAT.md` | An example personality file and the format it follows |

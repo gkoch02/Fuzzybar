@@ -51,7 +51,7 @@ That says: the menu bar shows the text `clock.fuzzy`, and clicking it opens `Pop
 
 **3. The alarm goes off.** The timer calls `refresh()`, which sets `now` to the current time and schedules the next tick. `now` is `@Published`, so SwiftUI rereads `clock.fuzzy`.
 
-**4. Choosing who speaks.** `Clock.fuzzy` calls `Clock.text(for:…)`, which decides in this order: a special time for this minute wins (`SpecialTimes.text`, in `SpecialTimes.swift`); otherwise an imported custom personality, if one is chosen; otherwise the built-in personality, through `FuzzyTime.phrase(for:…)`.
+**4. Choosing who speaks.** `Clock.fuzzy` calls `Clock.text(for:…)`, which decides in this order: a special time for this minute wins (`SpecialTimes.text`, in `SpecialTimes.swift`); otherwise an imported custom personality, if one is chosen; otherwise the built-in personality, through `FuzzyTime.phrase(for:…)`. If the date is switched on, `DateDisplay.text` (in `DateDisplay.swift`) then puts it before or after that phrase. Because `nextTick` compares this whole text, a shown date also makes the clock wake at midnight.
 
 **5. Into words.** `Sources/FuzzyBar/FuzzyTime.swift`. `phrase(hour:minute:personality:)` sends Vague to `vaguePhrase`, any personality with a slot table to `CustomPersonality.phrase`, and Spoken to `spokenPhrase`:
 
@@ -77,6 +77,7 @@ If the popover is open, step 2 picks every minute instead, so the exact time in 
 | `Sources/FuzzyBar/CustomPersonality.swift` | Slot-table personalities: phrasing, reading and writing `.fuzzybar` files |
 | `Sources/FuzzyBar/PersonalityStore.swift` | Which personality is chosen, and the imported ones, saved between launches |
 | `Sources/FuzzyBar/SpecialTimes.swift` | Special times and New Year's |
+| `Sources/FuzzyBar/DateDisplay.swift` | The date beside the time: styles, side, saving |
 | `Sources/FuzzyBar/Sun.swift` | Sunrise and sunset maths |
 | `Sources/FuzzyBar/SettingsView.swift` | The Preferences window |
 | `build.sh` | Build, sign, and optionally install |

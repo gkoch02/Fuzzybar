@@ -39,6 +39,10 @@ struct SettingsView: View {
 
             Divider()
 
+            DateSection()
+
+            Divider()
+
             sunSection
 
             Divider()

@@ -11,6 +11,12 @@ final class Clock: ObservableObject {
             scheduleNextTick()
         }
     }
+    @Published var dateDisplay: DateDisplay {
+        didSet {
+            dateDisplay.save(to: defaults)
+            scheduleNextTick()
+        }
+    }
     /// Owned here so a personality change can reschedule the tick.
     let personalities: PersonalityStore
     private let defaults: UserDefaults
@@ -25,6 +31,7 @@ final class Clock: ObservableObject {
         now = dateProvider()
         personalities = PersonalityStore(defaults: defaults)
         specialTimes = SpecialTimes.load(from: defaults)
+        dateDisplay = DateDisplay.load(from: defaults)
         personalities.onChange = { [weak self] in
             // Phrase boundaries differ between personalities (spoken flips at
             // :58, the ported ones at :00), so the pending tick may be wrong.
@@ -44,13 +51,21 @@ final class Clock: ObservableObject {
 
     var fuzzy: String {
         Self.text(for: now, personality: personalities.personality, custom: personalities.activeCustom,
-                  specialTimes: specialTimes)
+                  specialTimes: specialTimes, dateDisplay: dateDisplay)
     }
 
     /// What the menubar reads at `date`: a special time wins over everything,
-    /// then a custom personality, then the built-in one.
+    /// then a custom personality, then the built-in one. The date, when
+    /// shown, sits beside whichever of them it is.
     nonisolated static func text(for date: Date, calendar: Calendar = .current, personality: Personality,
-                                 custom: CustomPersonality? = nil, specialTimes: [SpecialTime]) -> String {
+                                 custom: CustomPersonality? = nil, specialTimes: [SpecialTime],
+                                 dateDisplay: DateDisplay = DateDisplay()) -> String {
+        dateDisplay.text(time(for: date, calendar: calendar, personality: personality, custom: custom,
+                              specialTimes: specialTimes), on: date, calendar: calendar)
+    }
+
+    private nonisolated static func time(for date: Date, calendar: Calendar, personality: Personality,
+                                         custom: CustomPersonality?, specialTimes: [SpecialTime]) -> String {
         if let special = SpecialTimes.text(for: date, calendar: calendar, userTimes: specialTimes) { return special }
         guard let custom else { return FuzzyTime.phrase(for: date, calendar: calendar, personality: personality) }
         let c = calendar.dateComponents([.hour, .minute], from: date)
@@ -82,12 +97,15 @@ final class Clock: ObservableObject {
     /// their start and another at their end, like any phrase boundary.
     /// It looks five minutes ahead, the length of a slot; a phrase that holds
     /// longer, like Vague's, is simply looked at again on the next wake.
+    /// A date in the menubar changes the text at midnight, so that is found
+    /// the same way.
     static func nextTick(after date: Date, popoverVisible: Bool, calendar: Calendar = .current,
                          personality: Personality = .default, custom: CustomPersonality? = nil,
-                         specialTimes: [SpecialTime] = []) -> Date {
+                         specialTimes: [SpecialTime] = [], dateDisplay: DateDisplay = DateDisplay()) -> Date {
         let minuteStart = calendar.dateInterval(of: .minute, for: date)!.start
         func text(_ d: Date) -> String {
-            Self.text(for: d, calendar: calendar, personality: personality, custom: custom, specialTimes: specialTimes)
+            Self.text(for: d, calendar: calendar, personality: personality, custom: custom,
+                      specialTimes: specialTimes, dateDisplay: dateDisplay)
         }
         let phrase = text(date)
         for offset in 1...5 {
@@ -103,7 +121,7 @@ final class Clock: ObservableObject {
         timer?.invalidate()
         let fireDate = Self.nextTick(after: dateProvider(), popoverVisible: popoverVisible,
                                      personality: personalities.personality, custom: personalities.activeCustom,
-                                     specialTimes: specialTimes)
+                                     specialTimes: specialTimes, dateDisplay: dateDisplay)
         let t = Timer(fire: fireDate, interval: 0, repeats: false) { [weak self] _ in
             Task { @MainActor in self?.refresh() }
         }

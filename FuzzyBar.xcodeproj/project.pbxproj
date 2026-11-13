@@ -13,6 +13,7 @@
 		24E09F039C92356B626E9062 /* SpecialTimesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F71DF1AA3F65646134B60B1 /* SpecialTimesSection.swift */; };
 		31B4C8CD3DF4DCD51B277FAC /* SpecialTimesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954874F52C1BE644E1FFDC5C /* SpecialTimesTests.swift */; };
 		37A0707D0A60FAD93E97E506 /* CalendarGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031CBBBEDCCF3F689EAD285 /* CalendarGrid.swift */; };
+		3DDB763D745BA8C297FA7DE0 /* DateDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B048DA12FD5E60B8BDF238 /* DateDisplay.swift */; };
 		44108A0AA9B5496CD5C3021F /* SunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAABB1BEB611FF49CD374907 /* SunView.swift */; };
 		487F113D07FBF5DFDFBDB78C /* LoginSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7026A27B615A83F91733F9 /* LoginSettingsTests.swift */; };
 		4C45A9D129257D2E9951EB51 /* SunSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524E6448E6CD15ACE2AA31EC /* SunSettings.swift */; };
@@ -28,8 +29,10 @@
 		83BB5E8207E5BB58782F342C /* SpecialTimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462A9B047B859DF5C0E0B215 /* SpecialTimes.swift */; };
 		8BC4E9EF2C3FA6BE65399166 /* PersonalitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5ECB80675A95420BF5DCFC /* PersonalitySection.swift */; };
 		95B16C71A7A9702595700B96 /* FuzzyTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB683AFB1FFCFDC0C10E6A8 /* FuzzyTime.swift */; };
+		9F5BCE44C10E00ED05CFF396 /* DateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E89A973CC1BFBB0AEFEE67 /* DateSection.swift */; };
 		AA2A56DB8B9CD30AC2D4F899 /* FuzzyBarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ACBE7A6AF53EFC0EA068E9A /* FuzzyBarApp.swift */; };
 		BB649E8E1636670A4E253035 /* Personality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8391076FAEB2905D423F44 /* Personality.swift */; };
+		BCFE6474760680376DD774EA /* DateDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0249615585B3D7C2FBE5217 /* DateDisplayTests.swift */; };
 		C093B5A776EBF3FA894FAA7C /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB764659BCAC1C6A9533FAE /* Clock.swift */; };
 		C6DB59FC52A97864D4BFA480 /* CustomPersonalityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679B565660E81923D9B3DED /* CustomPersonalityTests.swift */; };
 		CDF317B3569BE9CB37B0C5C4 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE08C2FF3B8DFAF0EB616DA /* CalendarView.swift */; };
@@ -65,10 +68,13 @@
 		79866C22EAEAFAC3EAD84286 /* CustomPersonality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPersonality.swift; sourceTree = "<group>"; };
 		7ACBE7A6AF53EFC0EA068E9A /* FuzzyBarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuzzyBarApp.swift; sourceTree = "<group>"; };
 		7EE08C2FF3B8DFAF0EB616DA /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		84B048DA12FD5E60B8BDF238 /* DateDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDisplay.swift; sourceTree = "<group>"; };
 		8592B5A3456545DD3824B463 /* CalendarGridTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarGridTests.swift; sourceTree = "<group>"; };
 		8679B565660E81923D9B3DED /* CustomPersonalityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPersonalityTests.swift; sourceTree = "<group>"; };
 		954874F52C1BE644E1FFDC5C /* SpecialTimesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialTimesTests.swift; sourceTree = "<group>"; };
+		A7E89A973CC1BFBB0AEFEE67 /* DateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSection.swift; sourceTree = "<group>"; };
 		AF7026A27B615A83F91733F9 /* LoginSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSettingsTests.swift; sourceTree = "<group>"; };
+		C0249615585B3D7C2FBE5217 /* DateDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDisplayTests.swift; sourceTree = "<group>"; };
 		CC5ECB80675A95420BF5DCFC /* PersonalitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalitySection.swift; sourceTree = "<group>"; };
 		CC9A4E73BC2D005522CFC069 /* PersonalityStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalityStore.swift; sourceTree = "<group>"; };
 		CCB683AFB1FFCFDC0C10E6A8 /* FuzzyTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuzzyTime.swift; sourceTree = "<group>"; };
@@ -96,6 +102,8 @@
 				7EE08C2FF3B8DFAF0EB616DA /* CalendarView.swift */,
 				3AB764659BCAC1C6A9533FAE /* Clock.swift */,
 				79866C22EAEAFAC3EAD84286 /* CustomPersonality.swift */,
+				84B048DA12FD5E60B8BDF238 /* DateDisplay.swift */,
+				A7E89A973CC1BFBB0AEFEE67 /* DateSection.swift */,
 				7ACBE7A6AF53EFC0EA068E9A /* FuzzyBarApp.swift */,
 				CCB683AFB1FFCFDC0C10E6A8 /* FuzzyTime.swift */,
 				EE4571EC1D7726D3A62AFBF2 /* LoginSettings.swift */,
@@ -119,6 +127,7 @@
 				8592B5A3456545DD3824B463 /* CalendarGridTests.swift */,
 				6BD1B0A344DA4BED8FCD91F0 /* ClockTests.swift */,
 				8679B565660E81923D9B3DED /* CustomPersonalityTests.swift */,
+				C0249615585B3D7C2FBE5217 /* DateDisplayTests.swift */,
 				4220F4D4CF3F80E74FDFAD04 /* FuzzyTimeTests.swift */,
 				AF7026A27B615A83F91733F9 /* LoginSettingsTests.swift */,
 				ED1379B2D6AF7BDB43D67059 /* PersonalityTests.swift */,
@@ -264,6 +273,8 @@
 				CDF317B3569BE9CB37B0C5C4 /* CalendarView.swift in Sources */,
 				C093B5A776EBF3FA894FAA7C /* Clock.swift in Sources */,
 				61528AD39DAA38C46D6E0035 /* CustomPersonality.swift in Sources */,
+				3DDB763D745BA8C297FA7DE0 /* DateDisplay.swift in Sources */,
+				9F5BCE44C10E00ED05CFF396 /* DateSection.swift in Sources */,
 				AA2A56DB8B9CD30AC2D4F899 /* FuzzyBarApp.swift in Sources */,
 				95B16C71A7A9702595700B96 /* FuzzyTime.swift in Sources */,
 				766696F0C4C216DD80F57A14 /* LoginSettings.swift in Sources */,
@@ -287,6 +298,7 @@
 				23D6FBBD0677B291687CCAC3 /* CalendarGridTests.swift in Sources */,
 				1255F4D1A2A6A89660756514 /* ClockTests.swift in Sources */,
 				C6DB59FC52A97864D4BFA480 /* CustomPersonalityTests.swift in Sources */,
+				BCFE6474760680376DD774EA /* DateDisplayTests.swift in Sources */,
 				682CD32C35DCE363532AA143 /* FuzzyTimeTests.swift in Sources */,
 				487F113D07FBF5DFDFBDB78C /* LoginSettingsTests.swift in Sources */,
 				50D9DC7280F2FF3BE7591A31 /* PersonalityTests.swift in Sources */,
