@@ -43,6 +43,8 @@ struct SettingsView: View {
                 .font(.caption2)
                 .foregroundStyle(.tertiary)
         }
+        // The dividers would otherwise let the window open wider than the columns.
+        .fixedSize()
         .padding(24)
         .background(SettingsWindow.Reader())
         .dropDestination(for: URL.self) { urls, _ in
