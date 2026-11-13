@@ -13,67 +13,37 @@ struct SettingsView: View {
 
     var body: some View {
         VStack(spacing: 18) {
-            VStack(spacing: 6) {
-                Image(nsImage: NSApp.applicationIconImage)
-                    .resizable()
-                    .frame(width: 80, height: 80)
-                Text("FuzzyBar")
-                    .font(.title2).fontWeight(.semibold)
-                Text("Version \(version)")
-                    .font(.caption).foregroundStyle(.secondary)
-                Text("Tells the time in words, the way you'd say it out loud. Click the menubar for the exact time and a calendar.")
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.top, 6)
+            // Two columns: stacked in one, the sections make a window taller
+            // than a small laptop's screen.
+            HStack(alignment: .top, spacing: 24) {
+                VStack(spacing: 18) {
+                    about
+                    Divider()
+                    PersonalitySection(message: $personalityMessage)
+                    Divider()
+                    loginSection
+                }
+                .frame(width: Self.columnWidth)
+
+                Divider()
+
+                VStack(spacing: 18) {
+                    SpecialTimesSection()
+                    Divider()
+                    DateSection()
+                    Divider()
+                    sunSection
+                }
+                .frame(width: Self.columnWidth)
             }
 
             Divider()
 
-            PersonalitySection(message: $personalityMessage)
-
-            Divider()
-
-            SpecialTimesSection()
-
-            Divider()
-
-            DateSection()
-
-            Divider()
-
-            sunSection
-
-            Divider()
-
-            VStack(alignment: .leading, spacing: 6) {
-                Toggle("Start at login", isOn: Binding(
-                    get: { login.isRequested }, set: { login.setEnabled($0) }
-                ))
-                if login.status == .requiresApproval {
-                    Text("Approval is needed in System Settings before FuzzyBar can start at login.")
-                        .font(.caption)
-                        .fixedSize(horizontal: false, vertical: true)
-                    Button("Open Login Items…") { SMAppService.openSystemSettingsLoginItems() }
-                }
-                if let error = login.error {
-                    Text(error).font(.caption).foregroundStyle(.red)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-
-            Divider()
-
-            Text("© 2026 Gregory M Koch\nMade with love and no Rosetta.")
+            Text("© 2026 Gregory M Koch. Made with love and no Rosetta.")
                 .font(.caption2)
                 .foregroundStyle(.tertiary)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
         }
         .padding(24)
-        .frame(width: 320)
         .background(SettingsWindow.Reader())
         .dropDestination(for: URL.self) { urls, _ in
             guard let url = urls.first else { return false }
@@ -88,6 +58,45 @@ struct SettingsView: View {
 }
 
 extension SettingsView {
+    private static let columnWidth: CGFloat = 272
+
+    private var about: some View {
+        VStack(spacing: 6) {
+            Image(nsImage: NSApp.applicationIconImage)
+                .resizable()
+                .frame(width: 80, height: 80)
+            Text("FuzzyBar")
+                .font(.title2).fontWeight(.semibold)
+            Text("Version \(version)")
+                .font(.caption).foregroundStyle(.secondary)
+            Text("Tells the time in words, the way you'd say it out loud. Click the menubar for the exact time and a calendar.")
+                .font(.callout)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 6)
+        }
+    }
+
+    private var loginSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Toggle("Start at login", isOn: Binding(
+                get: { login.isRequested }, set: { login.setEnabled($0) }
+            ))
+            if login.status == .requiresApproval {
+                Text("Approval is needed in System Settings before FuzzyBar can start at login.")
+                    .font(.caption)
+                    .fixedSize(horizontal: false, vertical: true)
+                Button("Open Login Items…") { SMAppService.openSystemSettingsLoginItems() }
+            }
+            if let error = login.error {
+                Text(error).font(.caption).foregroundStyle(.red)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
     private var zoneCity: String? {
         SunSettings.zoneLocation(.current) == nil ? nil : SunSettings.cityName(.current)
     }
