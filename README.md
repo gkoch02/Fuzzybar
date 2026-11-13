@@ -173,6 +173,7 @@ FuzzyBar asks for.
 | `Sources/FuzzyBar/PersonalityStore.swift` | The chosen personality and imported ones, saved between launches |
 | `Sources/FuzzyBar/SpecialTimes.swift`, `SpecialTimesSection.swift` | Special times and the New Year's message, and their Preferences list |
 | `Tests/FuzzyBarTests/`, `Tests/BuildScriptTests/` | Swift tests, one file per unit, and the build-script and Xcode-project checks |
+| `docs/CODE_TOUR.md` | A walk through the code for newcomers: one minute from the timer to the menubar |
 | `Examples/`, `docs/PERSONALITY_FORMAT.md` | An example personality file and the format it follows |
 | `Assets/` | Icon renderer, the generated `.icns`, and the store screenshots (raws plus captioned set), and the README banner |
 | `Tools/make_screenshots.py` | Renders the captioned screenshots from the raws |

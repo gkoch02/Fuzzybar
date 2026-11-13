@@ -17,3 +17,5 @@
   `Tests/BuildScriptTests` checks the project matches the disk.
 - `Tools/check_archive.sh` is shared with other PlumpBug repos: change only its
   "this repo" block here.
+- `docs/CODE_TOUR.md` follows one minute from the timer to the menubar and
+  names functions; update it when one it names is renamed or moved.
