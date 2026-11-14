@@ -8,8 +8,8 @@ TextEdit.
 
 1. In FuzzyBar's Preferences, choose **Save as Template…**. It saves the
    personality you're using now and opens the file in your text editor.
-   Spoken and Vague work differently, so choosing either one saves Classic
-   instead.
+   Spoken, Spanish, French and Vague work differently, so choosing one of
+   them saves Classic instead.
 2. Change the words after each label, keep the labels, and save.
 3. Choose **Import…**, or drop the file anywhere on the Preferences window.
    It appears in the Personality picker below the built-in ones.

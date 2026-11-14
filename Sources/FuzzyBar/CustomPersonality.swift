@@ -213,8 +213,8 @@ extension CustomPersonality {
 
 extension Personality {
     /// This personality as a custom one: what Save as Template writes, and
-    /// what `FuzzyTime` phrases it with. Spoken and Vague don't use the
-    /// twelve-slot table, so they have none.
+    /// what `FuzzyTime` phrases it with. `nil` for the ones with no
+    /// twelve-slot table (`slotPhrases`).
     var template: CustomPersonality? {
         guard let slots = slotPhrases else { return nil }
         let hours = (0..<24).map { hourText(displayHour: $0) }

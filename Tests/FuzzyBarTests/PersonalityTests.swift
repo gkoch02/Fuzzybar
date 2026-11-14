@@ -19,6 +19,8 @@ final class PersonalityTests: XCTestCase {
         XCTAssertEqual(p(9, 30, .classic), "half past nine am")
         XCTAssertEqual(p(9, 30, .shakespeare), "'tis half past nine of the clock")
         XCTAssertEqual(p(9, 30, .german), "halb zehn")
+        XCTAssertEqual(p(9, 30, .spanish), "las nueve y media")
+        XCTAssertEqual(p(9, 30, .french), "neuf heures et demie")
         XCTAssertEqual(p(9, 30, .missionControl), "MIDPOINT, 0900 HOURS")
         XCTAssertEqual(p(9, 30, .eldritch), "the half-hour, the ninth hour")
         XCTAssertEqual(p(9, 30, .latin), "media post hora IX a.m.")
@@ -67,6 +69,54 @@ final class PersonalityTests: XCTestCase {
         XCTAssertEqual(p(11, 30, .german), "halb zwölf")
         XCTAssertEqual(p(0, 30, .german), "halb eins")
         XCTAssertEqual(p(23, 58, .german), "kurz vor zwölf")
+    }
+
+    /// One reading per slot, in order: the hour leads all but "casi".
+    func testSpanishReadsEverySlotInOrder() {
+        XCTAssertEqual(stride(from: 0, to: 60, by: 5).map { p(9, $0, .spanish) }, [
+            "las nueve y pico", "las nueve y cinco", "las nueve y diez", "las nueve y cuarto",
+            "las nueve y veinte", "las nueve y veinticinco", "las nueve y media", "las diez menos veinticinco",
+            "las diez menos veinte", "las diez menos cuarto", "las diez menos diez", "casi las diez",
+        ])
+    }
+
+    func testSpanishOneIsSingular() {
+        XCTAssertEqual(p(1, 15, .spanish), "la una y cuarto")
+        XCTAssertEqual(p(13, 0, .spanish), "la una y pico")
+        XCTAssertEqual(p(12, 45, .spanish), "la una menos cuarto")
+        XCTAssertEqual(p(0, 58, .spanish), "casi la una")
+        XCTAssertEqual(p(1, 45, .spanish), "las dos menos cuarto")
+        XCTAssertEqual(p(23, 58, .spanish), "casi las doce")
+        XCTAssertEqual(p(0, 0, .spanish), "las doce y pico")
+        XCTAssertEqual(p(12, 30, .spanish), "las doce y media")
+    }
+
+    func testFrenchReadsEverySlotInOrder() {
+        XCTAssertEqual(stride(from: 0, to: 60, by: 5).map { p(9, $0, .french) }, [
+            "neuf heures passées", "neuf heures cinq", "neuf heures dix", "neuf heures et quart",
+            "neuf heures vingt", "neuf heures vingt-cinq", "neuf heures et demie", "dix heures moins vingt-cinq",
+            "dix heures moins vingt", "dix heures moins le quart", "dix heures moins dix", "presque dix heures",
+        ])
+    }
+
+    /// "midi" and "minuit" stand in for twelve and are masculine; "une
+    /// heure" is singular. Both show in "passé" and "demi".
+    func testFrenchAgreesWithNoonMidnightAndOne() {
+        XCTAssertEqual(p(12, 0, .french), "midi passé")
+        XCTAssertEqual(p(12, 15, .french), "midi et quart")
+        XCTAssertEqual(p(12, 30, .french), "midi et demi")
+        XCTAssertEqual(p(11, 45, .french), "midi moins le quart")
+        XCTAssertEqual(p(11, 58, .french), "presque midi")
+        XCTAssertEqual(p(0, 0, .french), "minuit passé")
+        XCTAssertEqual(p(0, 30, .french), "minuit et demi")
+        XCTAssertEqual(p(23, 40, .french), "minuit moins vingt")
+        XCTAssertEqual(p(23, 58, .french), "presque minuit")
+        XCTAssertEqual(p(1, 0, .french), "une heure passée")
+        XCTAssertEqual(p(13, 30, .french), "une heure et demie")
+        XCTAssertEqual(p(12, 45, .french), "une heure moins le quart")
+        XCTAssertEqual(p(0, 58, .french), "presque une heure")
+        XCTAssertEqual(p(14, 0, .french), "deux heures passées")
+        XCTAssertEqual(p(21, 10, .french), "neuf heures dix")
     }
 
     func testMissionControlUsesTwentyFourHourTime() {
@@ -152,8 +202,8 @@ final class PersonalityTests: XCTestCase {
     /// Minutes 57-59 must name the *next* hour in every personality: 58 and
     /// 59 round past the last slot, and the cap at 11 keeps them on it.
     func testAlmostNextHourNeverWraps() {
-        for personality in Personality.allCases where personality.slotPhrases != nil {
-            let slots = personality.slotPhrases!
+        for personality in Personality.allCases {
+            guard let slots = personality.slotPhrases ?? personality.minutePhrases else { continue }
             for hour in 0..<24 {
                 for minute in 57...59 {
                     let text = p(hour, minute, personality)
@@ -166,8 +216,9 @@ final class PersonalityTests: XCTestCase {
     }
 
     func testSlotTablesAreWellFormed() {
-        for personality in Personality.allCases where personality.slotPhrases != nil {
-            XCTAssertEqual(personality.slotPhrases!.count, 12, "\(personality)")
+        for personality in Personality.allCases {
+            guard let slots = personality.slotPhrases ?? personality.minutePhrases else { continue }
+            XCTAssertEqual(slots.count, 12, "\(personality)")
             XCTAssertTrue((1...11).contains(personality.hourAdvanceSlot), "\(personality)")
         }
     }
@@ -209,9 +260,9 @@ final class PersonalityTests: XCTestCase {
         XCTAssertEqual(PersonalityStore(defaults: defaults).personality, .spoken)
     }
 
-    func testEightPersonalitiesShip() {
+    func testPersonalitiesShipInPickerOrder() {
         XCTAssertEqual(Personality.allCases.map(\.rawValue),
-                       ["spoken", "classic", "shakespeare", "german",
+                       ["spoken", "classic", "shakespeare", "german", "spanish", "french",
                         "missionControl", "eldritch", "latin", "vague"])
     }
 

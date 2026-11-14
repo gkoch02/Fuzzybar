@@ -126,7 +126,7 @@ special time the date stays where it is.
 ## Personalities
 
 Preferences has a Personality picker. The default is the spoken English above;
-Vague is FuzzyBar's own, and the rest are ported from
+Spanish, French and Vague are FuzzyBar's own, and the rest are ported from
 [LittleFuzzyClock](https://github.com/gkoch02/LittleFuzzyClock). All shown at
 8:40 pm:
 
@@ -136,6 +136,8 @@ Vague is FuzzyBar's own, and the rest are ported from
 | Classic | `twenty to nine pm` | Plain English with am and pm; "just after" and "almost" at the edges. |
 | Shakespeare | `twenty 'fore nine of the clock` | Archaic English; drops am/pm as anachronistic. |
 | German | `zwanzig vor neun` | Standard High German; "halb zehn" anchors on the *next* hour. |
+| Spanish | `las nueve menos veinte` | As Spain says it, the hour first; "y pico" just after the hour, "casi" just before. |
+| French | `neuf heures moins vingt` | The hour first; noon and midnight are "midi" and "minuit". |
 | Mission Control | `T-20 MINUTES, 2100 HOURS` | Mission-control patter; 24-hour numeric time. |
 | Eldritch | `twenty 'fore, the ninth hour` | Cosmic dread; ordinal hours; climaxes with "the stars are right". |
 | Latin | `viginti ante hora IX p.m.` | Roman-numeral hours; real Latin prepositions. |
@@ -150,7 +152,8 @@ exact minute each part starts.
 
 The ported personalities share LittleFuzzyClock's twelve-slot table, so
 minutes 58 and 59 stay on its last slot (Classic's "almost nine pm") rather than
-turning to the hour the way the spoken default does. The phrase tables live in
+turning to the hour the way the spoken default does. Spanish and French keep
+the same slots with the hour in front: "casi las nueve", "presque neuf heures". The phrase tables live in
 `Sources/FuzzyBar/Personality.swift`, Vague's parts of the day included.
 
 ## Your own personalities

@@ -30,8 +30,8 @@ struct PersonalitySection: View {
         )
     }
 
-    /// The active personality as a file to start from. Spoken and Vague have
-    /// no slot table, so they hand out Classic's instead.
+    /// The active personality as a file to start from. One with no slot
+    /// table hands out Classic's instead.
     private var template: CustomPersonality {
         personalities.activeCustom ?? personalities.personality.template ?? Personality.classic.template!
     }
