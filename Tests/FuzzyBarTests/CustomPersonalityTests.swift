@@ -62,6 +62,8 @@ final class CustomPersonalityTests: XCTestCase {
         }
         XCTAssertNil(Personality.spoken.template)
         XCTAssertNil(Personality.vague.template)
+        XCTAssertNil(Personality.spanish.template)
+        XCTAssertNil(Personality.french.template)
         // am/pm personalities need all 24 hours; the rest fold to 12.
         XCTAssertEqual(Personality.classic.template?.hours.count, 24)
         XCTAssertEqual(Personality.german.template?.hours.count, 12)

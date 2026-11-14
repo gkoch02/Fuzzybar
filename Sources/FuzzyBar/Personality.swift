@@ -1,7 +1,7 @@
 import Foundation
 
 /// The phrasing styles ported from LittleFuzzyClock, plus FuzzyBar's own
-/// Spoken (the default) and Vague. LittleFuzzyClock renders the phrase and
+/// Spoken (the default), Spanish, French and Vague. LittleFuzzyClock renders the phrase and
 /// the hour on two lines of an e-ink panel; the menubar gets one line, so
 /// each personality also says how to join the two halves.
 enum Personality: String, CaseIterable, Identifiable {
@@ -9,6 +9,8 @@ enum Personality: String, CaseIterable, Identifiable {
     case classic
     case shakespeare
     case german
+    case spanish
+    case french
     case missionControl
     case eldritch
     case latin
@@ -41,6 +43,8 @@ enum Personality: String, CaseIterable, Identifiable {
         case .classic: return "Classic"
         case .shakespeare: return "Shakespeare"
         case .german: return "German"
+        case .spanish: return "Spanish"
+        case .french: return "French"
         case .missionControl: return "Mission Control"
         case .eldritch: return "Eldritch"
         case .latin: return "Latin"
@@ -55,6 +59,8 @@ enum Personality: String, CaseIterable, Identifiable {
         case .classic: return "Plain English with am and pm."
         case .shakespeare: return "Archaic English; no am or pm, that's anachronistic."
         case .german: return "Standard High German; \"halb\" anchors on the next hour."
+        case .spanish: return "Spanish as Spain says it, hour first: \"las diez menos cuarto\"."
+        case .french: return "The hour first; noon and midnight are \"midi\" and \"minuit\"."
         case .missionControl: return "Mission-control patter in 24-hour time."
         case .eldritch: return "Cosmic dread; climaxes with \"the stars are right\"."
         case .latin: return "Roman-numeral hours and real Latin prepositions."
@@ -64,10 +70,12 @@ enum Personality: String, CaseIterable, Identifiable {
 
     /// The twelve five-minute slots, index 0 = on the hour, 11 = "almost".
     /// `nil` for the spoken personality, which has its own thirteen-slot logic,
-    /// and for vague, which ignores the minutes (see `vagueParts`).
+    /// for Spanish and French, where the hour comes first (see
+    /// `minutePhrases`), and for vague, which ignores the minutes (see
+    /// `vagueParts`).
     var slotPhrases: [String]? {
         switch self {
-        case .spoken, .vague:
+        case .spoken, .spanish, .french, .vague:
             return nil
         case .classic:
             return ["just after", "a little past", "ten past", "quarter past", "twenty past",
@@ -93,6 +101,24 @@ enum Personality: String, CaseIterable, Identifiable {
             return ["modo post", "quinque post", "decem post", "quadrans post", "viginti post",
                     "viginti quinque post", "media post", "viginti quinque ante", "viginti ante",
                     "quadrans ante", "decem ante", "fere"]
+        }
+    }
+
+    /// What follows the hour in Spanish and French, for the same twelve
+    /// slots; `nil` for everyone else. The last is the exception: "almost"
+    /// goes in front of the hour. French's slots 0 and 6 are for a plural
+    /// hour; `FuzzyTime` makes them agree with "une heure", "midi" and
+    /// "minuit".
+    var minutePhrases: [String]? {
+        switch self {
+        case .spanish:
+            return ["y pico", "y cinco", "y diez", "y cuarto", "y veinte", "y veinticinco", "y media",
+                    "menos veinticinco", "menos veinte", "menos cuarto", "menos diez", "casi"]
+        case .french:
+            return ["passées", "cinq", "dix", "et quart", "vingt", "vingt-cinq", "et demie",
+                    "moins vingt-cinq", "moins vingt", "moins le quart", "moins dix", "presque"]
+        default:
+            return nil
         }
     }
 
@@ -131,6 +157,15 @@ enum Personality: String, CaseIterable, Identifiable {
         "zwölf", "eins", "zwei", "drei", "vier", "fünf",
         "sechs", "sieben", "acht", "neun", "zehn", "elf",
     ]
+    private static let spanishHours = [
+        "doce", "una", "dos", "tres", "cuatro", "cinco",
+        "seis", "siete", "ocho", "nueve", "diez", "once",
+    ]
+    /// From one to eleven: twelve is "midi" or "minuit".
+    private static let frenchHours = [
+        "", "une", "deux", "trois", "quatre", "cinq",
+        "six", "sept", "huit", "neuf", "dix", "onze",
+    ]
     private static let ordinalHours = [
         "twelfth", "first", "second", "third", "fourth", "fifth",
         "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh",
@@ -152,6 +187,11 @@ enum Personality: String, CaseIterable, Identifiable {
             return "\(Self.englishHours[index]) of the clock"
         case .german:
             return Self.germanHours[index]
+        case .spanish:
+            return "\(index == 1 ? "la" : "las") \(Self.spanishHours[index])"
+        case .french:
+            if index == 0 { return isPM ? "midi" : "minuit" }
+            return "\(Self.frenchHours[index]) \(index == 1 ? "heure" : "heures")"
         case .missionControl:
             return String(format: "%02d00 HOURS", h24)
         case .eldritch:

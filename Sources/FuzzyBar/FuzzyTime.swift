@@ -3,11 +3,14 @@ import Foundation
 /// Converts a clock time into a fuzzy phrase like "twenty to nine".
 /// Spoken, FuzzyBar's own, rounds to the nearest five minutes (37 -> 35,
 /// 38 -> 40) and turns to the next hour at :58. Vague names the part of the
-/// day. The LittleFuzzyClock personalities run on the same twelve-slot
+/// day. Spanish and French put the hour first. The LittleFuzzyClock personalities run on the same twelve-slot
 /// engine as imported ones (`CustomPersonality.phrase`).
 enum FuzzyTime {
     static func phrase(hour: Int, minute: Int, personality: Personality = .default) -> String {
         if personality == .vague { return vaguePhrase(hour: hour, minute: minute) }
+        if let minutes = personality.minutePhrases {
+            return hourFirstPhrase(hour: hour, minute: minute, personality: personality, minutes: minutes)
+        }
         guard let table = personality.template else { return spokenPhrase(hour: hour, minute: minute) }
         return table.phrase(hour: hour, minute: minute)
     }
@@ -16,6 +19,28 @@ enum FuzzyTime {
     private static func vaguePhrase(hour: Int, minute: Int) -> String {
         let minuteOfDay = hour * 60 + minute
         return Personality.vagueParts.last { $0.start <= minuteOfDay }!.phrase
+    }
+
+    /// "las nueve y cuarto", "neuf heures et quart": the slots and the turn
+    /// to the next hour are the slot tables' (`CustomPersonality.phrase`),
+    /// with the hour in front of all but "almost".
+    private static func hourFirstPhrase(hour: Int, minute: Int, personality: Personality, minutes: [String]) -> String {
+        let slot = min(Int((Double(minute) / 5.0).rounded()), 11)
+        let displayHour = (slot < personality.hourAdvanceSlot ? hour : hour + 1) % 24
+        let hourText = personality.hourText(displayHour: displayHour)
+        if slot == 11 { return "\(minutes[slot]) \(hourText)" }
+
+        var after = minutes[slot]
+        if personality == .french {
+            // "midi" and "minuit" are masculine, "une heure" is singular.
+            let noon = displayHour % 12 == 0
+            switch slot {
+            case 0: after = noon ? "passé" : displayHour % 12 == 1 ? "passée" : "passées"
+            case 6: after = noon ? "et demi" : "et demie"
+            default: break
+            }
+        }
+        return "\(hourText) \(after)"
     }
 
     private static func spokenPhrase(hour: Int, minute: Int) -> String {
