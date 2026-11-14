@@ -58,7 +58,8 @@ HEADLINE = (0xFF, 0xFF, 0xFF)
 # `uniform=True` crops every shot to the widest one's width, keeping the right
 # edge (where the menubar icons are) and extending a narrower capture's left
 # edge from its own first column, so strips of different widths come out
-# identical. Several shots stack in a centred column.
+# identical. Several shots stack in a centred column, `gap` points apart
+# (28 unless the frame says otherwise).
 # Window captures taken with ⇧⌘4 then Space carry their own shadow and
 # transparent margins; list those in PLAIN so they are placed untouched.
 FRAMES = {
@@ -73,14 +74,16 @@ FRAMES = {
         shots=[("popover.png", "fit")],
     ),
     "03-personalities": dict(
-        eyebrow="Eight personalities, or write your own",
-        headline="Plain spoken English, Classic, Shakespeare, German, "
-                 "Mission Control, Eldritch, Latin, or Vague.",
-        shots=[("menubar-spoken.png", 1.2, 32), ("menubar-classic.png", 1.2, 32),
-               ("menubar-shakespeare.png", 1.2, 32), ("menubar-german.png", 1.2, 32),
-               ("menubar-missioncontrol.png", 1.2, 32), ("menubar-eldritch.png", 1.2, 32),
-               ("menubar-latin.png", 1.2, 32), ("menubar-vague.png", 1.2, 32)],
+        eyebrow="Ten personalities, or write your own",
+        headline="Plain spoken English, Classic, Shakespeare, German, Spanish, "
+                 "French, Mission Control, Eldritch, Latin, or Vague.",
+        shots=[("menubar-spoken.png", 1, 32), ("menubar-classic.png", 1, 32),
+               ("menubar-shakespeare.png", 1, 32), ("menubar-german.png", 1, 32),
+               ("menubar-spanish.png", 1, 32), ("menubar-french.png", 1, 32),
+               ("menubar-missioncontrol.png", 1, 32), ("menubar-eldritch.png", 1, 32),
+               ("menubar-latin.png", 1, 32), ("menubar-vague.png", 1, 32)],
         uniform=True,
+        gap=12,
     ),
     "04-settings": dict(
         eyebrow="Small on purpose",
@@ -225,7 +228,7 @@ def render(name, spec, s):
         raws = equalize(raws, s)
     shots = [place(shot[0], im, shot[1], s, avail) for shot, im in zip(spec["shots"], raws)]
     plain = [im for im, shot in zip(shots, spec["shots"]) if shot[0] in PLAIN]
-    gap = 28 * s
+    gap = spec.get("gap", 28) * s
     block_h = sum(im.height for im in shots) + gap * (len(shots) - 1)
     if block_h > avail:  # never crop; a frame that does not fit is a spec error
         raise SystemExit(f"{name}: captures need {block_h}px, only {avail}px below the caption")
@@ -261,6 +264,10 @@ def strips(s):
 
 def main(argv):
     wanted = argv[1:] or list(FRAMES)
+    missing = sorted({shot[0] for spec in FRAMES.values() for shot in spec["shots"]
+                      if not (SHOTS / shot[0]).exists()})
+    if missing:
+        raise SystemExit(f"no capture in {SHOTS.relative_to(ROOT)}/ for: {', '.join(missing)}")
     s = raw_scale()
     for name in wanted:
         if name not in FRAMES:
