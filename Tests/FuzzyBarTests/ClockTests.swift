@@ -27,6 +27,30 @@ final class ClockTests: XCTestCase {
         }
     }
 
+    func testHeldDateReadsHoursAndMinutes() {
+        let cal = gregorian()
+        let day = iso("2024-01-01T15:30:20Z")
+        XCTAssertEqual(Clock.heldDate("08:44", on: day, calendar: cal), iso("2024-01-01T08:44:00Z"))
+        XCTAssertEqual(Clock.heldDate("8:44", on: day, calendar: cal), iso("2024-01-01T08:44:00Z"))
+        XCTAssertEqual(Clock.heldDate("23:59", on: day, calendar: cal), iso("2024-01-01T23:59:00Z"))
+        for bad in ["", "0844", "8", "24:00", "08:60", "08:44:10", "-1:30", "a:b", "08:"] {
+            XCTAssertNil(Clock.heldDate(bad, on: day, calendar: cal), bad)
+        }
+    }
+
+    /// A held clock keeps its time through the things that refresh it, and
+    /// sets no timer: its next boundary is already in the past.
+    @MainActor func testHeldClockSetsNoTimerAndStaysPut() {
+        let held = iso("2024-01-01T08:44:00Z")
+        let clock = Clock(dateProvider: { held }, defaults: scratchDefaults(), ticks: false)
+        XCTAssertNil(clock.timerFireDate)
+        clock.setPopoverVisible(true)
+        clock.personalities.personality = .french
+        clock.refresh()
+        XCTAssertNil(clock.timerFireDate)
+        XCTAssertEqual(clock.now, held)
+    }
+
     @MainActor func testClockRefreshesOnOpeningAndExternalChanges() {
         var current = iso("2024-01-01T08:00:00Z")
         let clock = Clock(dateProvider: { current }, defaults: scratchDefaults())

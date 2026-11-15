@@ -19,10 +19,11 @@ stack; plumpbug.dev's FuzzyBar page copies the singles.
 Captions reuse the App Store listing copy (subtitle, promotional text,
 description). Edit them here and nowhere else.
 
-The menubar raws were shot in one sitting with the other menubar items
-hidden, so the strips differ only in the phrase. The phrase changes with
-the clock, so retake the set together rather than one alone, and crop
-each to the right 880 px of the bar.
+The menubar raws were shot with the other menubar items hidden, so the
+strips differ only in the phrase. The phrase changes with the clock, so
+shoot from Tools/capture_build.sh, which holds it at 08:44: a strip
+retaken or added later then matches the set. Crop each to the right
+880 px of the bar.
 
 The raw's pixel scale is read from menubar-spoken.png: a 1x capture of that
 strip is under 600 px wide, a Retina one is over. At 1x the canvas is the

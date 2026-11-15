@@ -2,7 +2,7 @@ import SwiftUI
 
 @main
 struct FuzzyBarApp: App {
-    @StateObject private var clock = Clock()
+    @StateObject private var clock = Clock.launched()
     @StateObject private var sun = SunSettings()
     @Environment(\.openSettings) private var openSettings
 

@@ -190,6 +190,7 @@ FuzzyBar asks for.
 | `Examples/`, `docs/PERSONALITY_FORMAT.md` | An example personality file and the format it follows |
 | `Assets/` | Icon renderer, the generated `.icns`, and the store screenshots (raws plus captioned set), and the README banner |
 | `Tools/make_screenshots.py` | Renders the captioned screenshots from the raws |
+| `Tools/capture_build.sh` | Launches a copy with its clock held at one time, for taking the raws |
 | `Tools/make_banner.py` | Renders the README banner |
 | `Tools/check_archive.sh` | Checks an Xcode archive is a Release build of the bumped version |
 | `Resources/` | Asset catalog (app icon) and the privacy manifest for the Xcode build |
