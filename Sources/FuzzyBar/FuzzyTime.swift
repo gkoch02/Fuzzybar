@@ -3,11 +3,12 @@ import Foundation
 /// Converts a clock time into a fuzzy phrase like "twenty to nine".
 /// Spoken, FuzzyBar's own, rounds to the nearest five minutes (37 -> 35,
 /// 38 -> 40) and turns to the next hour at :58. Vague names the part of the
-/// day. Spanish and French put the hour first. The LittleFuzzyClock personalities run on the same twelve-slot
+/// day, and Precise every minute. Spanish and French put the hour first. The LittleFuzzyClock personalities run on the same twelve-slot
 /// engine as imported ones (`CustomPersonality.phrase`).
 enum FuzzyTime {
     static func phrase(hour: Int, minute: Int, personality: Personality = .default) -> String {
         if personality == .vague { return vaguePhrase(hour: hour, minute: minute) }
+        if personality == .precise { return precisePhrase(hour: hour, minute: minute) }
         if let minutes = personality.minutePhrases {
             return hourFirstPhrase(hour: hour, minute: minute, personality: personality, minutes: minutes)
         }
@@ -19,6 +20,25 @@ enum FuzzyTime {
     private static func vaguePhrase(hour: Int, minute: Int) -> String {
         let minuteOfDay = hour * 60 + minute
         return Personality.vagueParts.last { $0.start <= minuteOfDay }!.phrase
+    }
+
+    /// The minute as a digital clock is read aloud, "eight forty-four" and
+    /// "nine oh five", except on the hour and the quarters, which keep
+    /// Spoken's words.
+    private static func precisePhrase(hour: Int, minute: Int) -> String {
+        let hourWord = Personality.englishHours[hour % 12]
+        switch minute {
+        case 0: return "\(hourWord) o'clock"
+        case 15: return "quarter past \(hourWord)"
+        case 30: return "half past \(hourWord)"
+        case 45: return "quarter to \(Personality.englishHours[(hour + 1) % 12])"
+        case ..<10: return "\(hourWord) oh \(Personality.englishMinutes[minute])"
+        case ..<20: return "\(hourWord) \(Personality.englishMinutes[minute])"
+        default:
+            let tens = Personality.englishTens[minute / 10]
+            let ones = Personality.englishMinutes[minute % 10]
+            return "\(hourWord) \(ones.isEmpty ? tens : "\(tens)-\(ones)")"
+        }
     }
 
     /// "las nueve y cuarto", "neuf heures et quart": the slots and the turn
