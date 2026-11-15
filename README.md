@@ -145,7 +145,7 @@ Spanish, French, Precise and Vague are FuzzyBar's own, and the rest are ported f
 | Vague | `evening` | The part of the day, from *early* round to *way too late*. |
 
 <p align="center">
-  <img src="Assets/screenshots/strips/personalities.png" width="432" alt="Eight menubar strips stacked, one per personality. The first seven at 8:44 am: quarter to nine; quarter to nine am; a quarter ’fore nine of the clock; viertel vor neun; T-15 MINUTES, 0900 HOURS; quarter ’fore, the ninth hour; quadrans ante hora IX a.m. The last, Vague, at 3:50 pm: afternoon.">
+  <img src="Assets/screenshots/strips/personalities.png" width="432" alt="Eleven menubar strips stacked, one per personality, all at 9:38 pm: twenty to ten; twenty to ten pm; twenty ’fore ten of the clock; zwanzig vor zehn; las diez menos veinte; dix heures moins vingt; T-20 MINUTES, 2200 HOURS; twenty ’fore, the tenth hour; viginti ante hora X p.m.; nine thirty-eight; late.">
 </p>
 
 Precise changes every minute: "eight forty-four", "nine oh five", with
@@ -193,6 +193,7 @@ FuzzyBar asks for.
 | `Examples/`, `docs/PERSONALITY_FORMAT.md` | An example personality file and the format it follows |
 | `Assets/` | Icon renderer, the generated `.icns`, and the store screenshots (raws plus captioned set), and the README banner |
 | `Tools/make_screenshots.py` | Renders the captioned screenshots from the raws |
+| `Tools/capture_build.sh` | Launches a copy with its clock held at one time, for taking the raws |
 | `Tools/make_banner.py` | Renders the README banner |
 | `Tools/check_archive.sh` | Checks an Xcode archive is a Release build of the bumped version |
 | `Resources/` | Asset catalog (app icon) and the privacy manifest for the Xcode build |

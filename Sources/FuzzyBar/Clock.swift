@@ -24,10 +24,13 @@ final class Clock: ObservableObject {
     private var observers: [(NotificationCenter, NSObjectProtocol)] = []
     private var popoverVisible = false
     private let dateProvider: () -> Date
+    /// False for a clock held at one time, which has nothing to wake for.
+    private let ticks: Bool
 
-    init(dateProvider: @escaping () -> Date = Date.init, defaults: UserDefaults = .standard) {
+    init(dateProvider: @escaping () -> Date = Date.init, defaults: UserDefaults = .standard, ticks: Bool = true) {
         self.dateProvider = dateProvider
         self.defaults = defaults
+        self.ticks = ticks
         now = dateProvider()
         personalities = PersonalityStore(defaults: defaults)
         specialTimes = SpecialTimes.load(from: defaults)
@@ -119,6 +122,10 @@ final class Clock: ObservableObject {
 
     private func scheduleNextTick() {
         timer?.invalidate()
+        timer = nil
+        // A held clock's next boundary is already past: a timer for it would
+        // fire, find the same time, and be set again without end.
+        guard ticks else { return }
         let fireDate = Self.nextTick(after: dateProvider(), popoverVisible: popoverVisible,
                                      personality: personalities.personality, custom: personalities.activeCustom,
                                      specialTimes: specialTimes, dateDisplay: dateDisplay)
@@ -132,3 +139,33 @@ final class Clock: ObservableObject {
     }
 }
 
+
+// MARK: - A held clock, for screenshots
+
+extension Clock {
+    /// The launch argument that holds a debug build's clock: `-fuzzyNow 08:44`.
+    static let holdArgument = "fuzzyNow"
+
+    /// The app's clock. A debug build started with `-fuzzyNow 08:44` reads
+    /// that time today and stays there, so a screenshot of one personality
+    /// matches the others taken at any other moment
+    /// (`Tools/capture_build.sh`). Only the launch arguments are read: a
+    /// stored default of the same name does nothing.
+    static func launched() -> Clock {
+        #if DEBUG
+        let arguments = UserDefaults.standard.volatileDomain(forName: UserDefaults.argumentDomain)
+        if let text = arguments[holdArgument] as? String, let date = heldDate(text, on: Date()) {
+            return Clock(dateProvider: { date }, ticks: false)
+        }
+        #endif
+        return Clock()
+    }
+
+    /// "08:44" or "8:44" as that time on `day`; `nil` for anything else.
+    nonisolated static func heldDate(_ text: String, on day: Date, calendar: Calendar = .current) -> Date? {
+        let parts = text.split(separator: ":", omittingEmptySubsequences: false)
+        guard parts.count == 2, parts.allSatisfy({ (1...2).contains($0.count) && $0.allSatisfy(\.isNumber) }),
+              let hour = Int(parts[0]), let minute = Int(parts[1]), hour < 24, minute < 60 else { return nil }
+        return calendar.date(bySettingHour: hour, minute: minute, second: 0, of: day)
+    }
+}

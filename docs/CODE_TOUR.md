@@ -89,7 +89,7 @@ If the popover is open, step 2 picks every minute instead, so the exact time in 
 - **`CalendarView.swift`, `CalendarGrid.swift`**: the month calendar.
 - **`LoginSettings.swift`**: the Start at Login switch.
 - **`project.yml`, `FuzzyBar.xcodeproj`, `Tools/check_archive.sh`**: only for Mac App Store builds.
-- **`Assets/`, `Tools/make_*.py`**: artwork.
+- **`Assets/`, `Tools/make_*.py`, `Tools/capture_build.sh`**: artwork, and the copy of the app that holds its clock still for screenshots (`Clock.launched`).
 
 The comments are long for an app this size. They're there because the code was written mostly by an AI, which rereads everything each time and benefits from having the reason for each choice next to it. A person can safely read around them.
 
