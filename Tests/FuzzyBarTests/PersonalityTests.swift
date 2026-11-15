@@ -182,6 +182,52 @@ final class PersonalityTests: XCTestCase {
         XCTAssertEqual(seen, parts.map(\.phrase))
     }
 
+    func testExactReadsEveryMinute() {
+        XCTAssertEqual(p(8, 44, .exact), "eight forty-four")
+        XCTAssertEqual(p(9, 5, .exact), "nine oh five")
+        XCTAssertEqual(p(9, 10, .exact), "nine ten")
+        XCTAssertEqual(p(9, 13, .exact), "nine thirteen")
+        XCTAssertEqual(p(9, 20, .exact), "nine twenty")
+        XCTAssertEqual(p(21, 59, .exact), "nine fifty-nine")
+        XCTAssertEqual(p(0, 1, .exact), "twelve oh one")
+        XCTAssertEqual(p(12, 27, .exact), "twelve twenty-seven")
+    }
+
+    func testExactKeepsTheHourAndTheQuarters() {
+        XCTAssertEqual(p(9, 0, .exact), "nine o'clock")
+        XCTAssertEqual(p(9, 15, .exact), "quarter past nine")
+        XCTAssertEqual(p(9, 30, .exact), "half past nine")
+        XCTAssertEqual(p(9, 45, .exact), "quarter to ten")
+        XCTAssertEqual(p(23, 45, .exact), "quarter to twelve")
+        XCTAssertEqual(p(12, 45, .exact), "quarter to one")
+        for hour in 0..<24 {
+            for minute in [0, 15, 30, 45] {
+                XCTAssertEqual(p(hour, minute, .exact), p(hour, minute, .spoken), "\(hour):\(minute)")
+            }
+        }
+    }
+
+    /// Twelve hours of minutes, no two alike, so the menubar never holds a
+    /// phrase past its minute.
+    func testExactNeverRepeatsWithinTwelveHours() {
+        var seen = Set<String>()
+        for hour in 0..<12 {
+            for minute in 0..<60 {
+                XCTAssertTrue(seen.insert(p(hour, minute, .exact)).inserted, "\(hour):\(minute)")
+                XCTAssertEqual(p(hour, minute, .exact), p(hour + 12, minute, .exact))
+            }
+        }
+    }
+
+    @MainActor
+    func testExactTicksEveryMinute() {
+        let cal = gregorian()
+        let date = cal.date(from: DateComponents(year: 2026, month: 9, day: 18, hour: 9, minute: 41, second: 20))!
+        let next = cal.date(from: DateComponents(year: 2026, month: 9, day: 18, hour: 9, minute: 42))!
+        XCTAssertEqual(Clock.nextTick(after: date, popoverVisible: false, calendar: cal, personality: .exact),
+                       next.addingTimeInterval(0.05))
+    }
+
     /// Vague holds one phrase for hours, so the ticker should wake at the
     /// next part and otherwise sleep in its usual five-minute steps.
     @MainActor
@@ -263,7 +309,7 @@ final class PersonalityTests: XCTestCase {
     func testPersonalitiesShipInPickerOrder() {
         XCTAssertEqual(Personality.allCases.map(\.rawValue),
                        ["spoken", "classic", "shakespeare", "german", "spanish", "french",
-                        "missionControl", "eldritch", "latin", "vague"])
+                        "missionControl", "eldritch", "latin", "exact", "vague"])
     }
 
     func testPreRenameValuesMigrateAndWithdrawnOnesFallBack() {

@@ -21,7 +21,7 @@ There's no network use, and nothing runs in the background besides one timer.
 |---|---|
 | **fuzzy time** / **phrase** | The time in words, as the menu bar shows it: "twenty to nine" |
 | **slot** | One of twelve five-minute steps round the clock face: slot 0 is on the hour, slot 8 is "twenty to". Minutes are rounded to the nearest slot |
-| **personality** | A way of saying the time (`Personality`): Spoken (the default), Classic, Shakespeare, German, Spanish, French, Mission Control, Eldritch, Latin, Vague |
+| **personality** | A way of saying the time (`Personality`): Spoken (the default), Classic, Shakespeare, German, Spanish, French, Mission Control, Eldritch, Latin, Exact, Vague |
 | **template** / **slot table** | A personality written as twelve slot phrases, the hour names and a pattern like `{phrase} {hour}`. `CustomPersonality` holds one; `Personality.template` gives the built-in ones that work this way |
 | **custom personality** | One written by the user as a plain-text `.fuzzybar` file and imported in Preferences. Same shape as a template (`docs/PERSONALITY_FORMAT.md`) |
 | **Vague** | The personality that names the part of the day ("evening") instead of the minutes (`Personality.vagueParts`) |
@@ -53,7 +53,7 @@ That says: the menu bar shows the text `clock.fuzzy`, and clicking it opens `Pop
 
 **4. Choosing who speaks.** `Clock.fuzzy` calls `Clock.text(for:…)`, which decides in this order: a special time for this minute wins (`SpecialTimes.text`, in `SpecialTimes.swift`); otherwise an imported custom personality, if one is chosen; otherwise the built-in personality, through `FuzzyTime.phrase(for:…)`. If the date is switched on, `DateDisplay.text` (in `DateDisplay.swift`) then puts it before or after that phrase. Because `nextTick` compares this whole text, a shown date also makes the clock wake at midnight.
 
-**5. Into words.** `Sources/FuzzyBar/FuzzyTime.swift`. `phrase(hour:minute:personality:)` sends Vague to `vaguePhrase`, Spanish and French to `hourFirstPhrase`, any personality with a slot table to `CustomPersonality.phrase`, and Spoken to `spokenPhrase`:
+**5. Into words.** `Sources/FuzzyBar/FuzzyTime.swift`. `phrase(hour:minute:personality:)` sends Vague to `vaguePhrase`, Exact to `exactPhrase`, Spanish and French to `hourFirstPhrase`, any personality with a slot table to `CustomPersonality.phrase`, and Spoken to `spokenPhrase`:
 
 ```swift
 var slot = Int((Double(minute) / 5.0).rounded())  // 0...12

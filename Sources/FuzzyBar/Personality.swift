@@ -1,7 +1,7 @@
 import Foundation
 
 /// The phrasing styles ported from LittleFuzzyClock, plus FuzzyBar's own
-/// Spoken (the default), Spanish, French and Vague. LittleFuzzyClock renders the phrase and
+/// Spoken (the default), Spanish, French, Exact and Vague. LittleFuzzyClock renders the phrase and
 /// the hour on two lines of an e-ink panel; the menubar gets one line, so
 /// each personality also says how to join the two halves.
 enum Personality: String, CaseIterable, Identifiable {
@@ -14,6 +14,7 @@ enum Personality: String, CaseIterable, Identifiable {
     case missionControl
     case eldritch
     case latin
+    case exact
     case vague
 
     static let `default`: Personality = .spoken
@@ -48,6 +49,7 @@ enum Personality: String, CaseIterable, Identifiable {
         case .missionControl: return "Mission Control"
         case .eldritch: return "Eldritch"
         case .latin: return "Latin"
+        case .exact: return "Exact"
         case .vague: return "Vague"
         }
     }
@@ -64,6 +66,7 @@ enum Personality: String, CaseIterable, Identifiable {
         case .missionControl: return "Mission-control patter in 24-hour time."
         case .eldritch: return "Cosmic dread; climaxes with \"the stars are right\"."
         case .latin: return "Roman-numeral hours and real Latin prepositions."
+        case .exact: return "Every minute, read out like a digital clock."
         case .vague: return "Just the part of the day; the hour is your problem."
         }
     }
@@ -71,11 +74,11 @@ enum Personality: String, CaseIterable, Identifiable {
     /// The twelve five-minute slots, index 0 = on the hour, 11 = "almost".
     /// `nil` for the spoken personality, which has its own thirteen-slot logic,
     /// for Spanish and French, where the hour comes first (see
-    /// `minutePhrases`), and for vague, which ignores the minutes (see
-    /// `vagueParts`).
+    /// `minutePhrases`), for exact, which names every minute, and for vague,
+    /// which ignores them (see `vagueParts`).
     var slotPhrases: [String]? {
         switch self {
-        case .spoken, .spanish, .french, .vague:
+        case .spoken, .spanish, .french, .exact, .vague:
             return nil
         case .classic:
             return ["just after", "a little past", "ten past", "quarter past", "twenty past",
@@ -153,6 +156,12 @@ enum Personality: String, CaseIterable, Identifiable {
         "twelve", "one", "two", "three", "four", "five",
         "six", "seven", "eight", "nine", "ten", "eleven",
     ]
+    /// Exact's minutes from one to nineteen, then the tens from twenty.
+    static let englishMinutes = [
+        "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+        "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
+    ]
+    static let englishTens = ["", "", "twenty", "thirty", "forty", "fifty"]
     private static let germanHours = [
         "zwölf", "eins", "zwei", "drei", "vier", "fünf",
         "sechs", "sieben", "acht", "neun", "zehn", "elf",
@@ -181,7 +190,7 @@ enum Personality: String, CaseIterable, Identifiable {
         let index = h24 % 12  // 0 = twelve
         let isPM = h24 >= 12
         switch self {
-        case .spoken, .classic, .vague:
+        case .spoken, .classic, .exact, .vague:
             return "\(Self.englishHours[index]) \(isPM ? "pm" : "am")"
         case .shakespeare:
             return "\(Self.englishHours[index]) of the clock"
