@@ -75,16 +75,17 @@ FRAMES = {
         shots=[("popover.png", "fit")],
     ),
     "03-personalities": dict(
-        eyebrow="Ten personalities, or write your own",
+        eyebrow="Eleven personalities, or write your own",
         headline="Plain spoken English, Classic, Shakespeare, German, Spanish, "
-                 "French, Mission Control, Eldritch, Latin, or Vague.",
+                 "French, Mission Control, Eldritch, Latin, Precise, or Vague.",
         shots=[("menubar-spoken.png", 1, 32), ("menubar-classic.png", 1, 32),
                ("menubar-shakespeare.png", 1, 32), ("menubar-german.png", 1, 32),
                ("menubar-spanish.png", 1, 32), ("menubar-french.png", 1, 32),
                ("menubar-missioncontrol.png", 1, 32), ("menubar-eldritch.png", 1, 32),
-               ("menubar-latin.png", 1, 32), ("menubar-vague.png", 1, 32)],
+               ("menubar-latin.png", 1, 32), ("menubar-precise.png", 1, 32),
+               ("menubar-vague.png", 1, 32)],
         uniform=True,
-        gap=12,
+        gap=10,
     ),
     "04-settings": dict(
         eyebrow="Small on purpose",
