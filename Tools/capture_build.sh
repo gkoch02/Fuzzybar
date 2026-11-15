@@ -3,7 +3,7 @@
 # time, so a personality's strip can be retaken on its own and still match the
 # rest of the set:
 #
-#   Tools/capture_build.sh          # held at 08:44, the time the strips show
+#   Tools/capture_build.sh          # held at 21:38, the time the strips show
 #   Tools/capture_build.sh 15:50
 #
 # It is a debug build (the only kind that reads -fuzzyNow) with its own bundle
@@ -12,7 +12,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-AT="${1:-08:44}"
+AT="${1:-21:38}"
 swift build -c debug --arch arm64
 BIN="$(swift build -c debug --arch arm64 --show-bin-path)/FuzzyBar"
 [[ -x "$BIN" ]] || { echo "Missing built executable: $BIN" >&2; exit 1; }

@@ -145,7 +145,7 @@ Spanish, French, Precise and Vague are FuzzyBar's own, and the rest are ported f
 | Vague | `evening` | The part of the day, from *early* round to *way too late*. |
 
 <p align="center">
-  <img src="Assets/screenshots/strips/personalities.png" width="432" alt="Eleven menubar strips stacked, one per personality. The first ten at 8:44 am: quarter to nine; quarter to nine am; a quarter ’fore nine of the clock; viertel vor neun; las nueve menos cuarto; neuf heures moins le quart; T-15 MINUTES, 0900 HOURS; quarter ’fore, the ninth hour; quadrans ante hora IX a.m.; eight forty-four. The last, Vague, at 3:50 pm: afternoon.">
+  <img src="Assets/screenshots/strips/personalities.png" width="432" alt="Eleven menubar strips stacked, one per personality, all at 9:38 pm: twenty to ten; twenty to ten pm; twenty ’fore ten of the clock; zwanzig vor zehn; las diez menos veinte; dix heures moins vingt; T-20 MINUTES, 2200 HOURS; twenty ’fore, the tenth hour; viginti ante hora X p.m.; nine thirty-eight; late.">
 </p>
 
 Precise changes every minute: "eight forty-four", "nine oh five", with

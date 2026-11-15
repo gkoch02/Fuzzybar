@@ -21,8 +21,9 @@ description). Edit them here and nowhere else.
 
 The menubar raws were shot with the other menubar items hidden, so the
 strips differ only in the phrase. The phrase changes with the clock, so
-shoot from Tools/capture_build.sh, which holds it at 08:44: a strip
-retaken or added later then matches the set. Crop each to the right
+shoot the whole set within one minute, or from Tools/capture_build.sh,
+which holds it at the minute the set shows: a strip retaken or added later
+then matches the rest. Crop each to the right
 880 px of the bar.
 
 The raw's pixel scale is read from menubar-spoken.png: a 1x capture of that
@@ -66,7 +67,7 @@ HEADLINE = (0xFF, 0xFF, 0xFF)
 FRAMES = {
     "01-menubar": dict(
         eyebrow="The time, in words",
-        headline="Instead of 8:44, your menubar reads “quarter to nine”.",
+        headline="Instead of 9:38, your menubar reads “twenty to ten”.",
         shots=[("menubar-spoken.png", 2.4, 33)],
     ),
     "02-popover": dict(
