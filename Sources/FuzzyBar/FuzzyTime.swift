@@ -3,12 +3,12 @@ import Foundation
 /// Converts a clock time into a fuzzy phrase like "twenty to nine".
 /// Spoken, FuzzyBar's own, rounds to the nearest five minutes (37 -> 35,
 /// 38 -> 40) and turns to the next hour at :58. Vague names the part of the
-/// day, and Exact every minute. Spanish and French put the hour first. The LittleFuzzyClock personalities run on the same twelve-slot
+/// day, and Precise every minute. Spanish and French put the hour first. The LittleFuzzyClock personalities run on the same twelve-slot
 /// engine as imported ones (`CustomPersonality.phrase`).
 enum FuzzyTime {
     static func phrase(hour: Int, minute: Int, personality: Personality = .default) -> String {
         if personality == .vague { return vaguePhrase(hour: hour, minute: minute) }
-        if personality == .exact { return exactPhrase(hour: hour, minute: minute) }
+        if personality == .precise { return precisePhrase(hour: hour, minute: minute) }
         if let minutes = personality.minutePhrases {
             return hourFirstPhrase(hour: hour, minute: minute, personality: personality, minutes: minutes)
         }
@@ -25,7 +25,7 @@ enum FuzzyTime {
     /// The minute as a digital clock is read aloud, "eight forty-four" and
     /// "nine oh five", except on the hour and the quarters, which keep
     /// Spoken's words.
-    private static func exactPhrase(hour: Int, minute: Int) -> String {
+    private static func precisePhrase(hour: Int, minute: Int) -> String {
         let hourWord = Personality.englishHours[hour % 12]
         switch minute {
         case 0: return "\(hourWord) o'clock"

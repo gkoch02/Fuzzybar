@@ -126,7 +126,7 @@ special time the date stays where it is.
 ## Personalities
 
 Preferences has a Personality picker. The default is the spoken English above;
-Spanish, French, Exact and Vague are FuzzyBar's own, and the rest are ported from
+Spanish, French, Precise and Vague are FuzzyBar's own, and the rest are ported from
 [LittleFuzzyClock](https://github.com/gkoch02/LittleFuzzyClock). All shown at
 8:40 pm:
 
@@ -141,14 +141,14 @@ Spanish, French, Exact and Vague are FuzzyBar's own, and the rest are ported fro
 | Mission Control | `T-20 MINUTES, 2100 HOURS` | Mission-control patter; 24-hour numeric time. |
 | Eldritch | `twenty 'fore, the ninth hour` | Cosmic dread; ordinal hours; climaxes with "the stars are right". |
 | Latin | `viginti ante hora IX p.m.` | Roman-numeral hours; real Latin prepositions. |
-| Exact | `eight forty` | Every minute, read out like a digital clock; the hour and the quarters keep their spoken names. |
+| Precise | `eight forty` | Every minute, read out like a digital clock; the hour and the quarters keep their spoken names. |
 | Vague | `evening` | The part of the day, from *early* round to *way too late*. |
 
 <p align="center">
   <img src="Assets/screenshots/strips/personalities.png" width="432" alt="Eight menubar strips stacked, one per personality. The first seven at 8:44 am: quarter to nine; quarter to nine am; a quarter ’fore nine of the clock; viertel vor neun; T-15 MINUTES, 0900 HOURS; quarter ’fore, the ninth hour; quadrans ante hora IX a.m. The last, Vague, at 3:50 pm: afternoon.">
 </p>
 
-Exact changes every minute: "eight forty-four", "nine oh five", with
+Precise changes every minute: "eight forty-four", "nine oh five", with
 "nine o'clock", "quarter past", "half past" and "quarter to" where they fall.
 Vague ignores the minutes and names the part of the day, changing on the
 minute each part starts.
