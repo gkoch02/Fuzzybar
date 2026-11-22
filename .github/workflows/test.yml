@@ -17,3 +17,24 @@ jobs:
         run: swift test
       - name: Build-script and Xcode-project tests
         run: python3 -m unittest discover -s Tests/BuildScriptTests -v
+
+  # The app that ships: the Xcode project's target, with its Info.plist,
+  # sandbox entitlements and the .fuzzybar file type, which `swift test` never
+  # builds. Its tests run hosted in the app, so the ones SwiftPM skips run here.
+  # Signed ad hoc: no team, no account, nothing to read from a keychain.
+  app:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain
+        run: xcodebuild -version
+      - name: App target tests
+        run: |
+          set +e
+          xcodebuild test -project FuzzyBar.xcodeproj -scheme FuzzyBar \
+            -destination 'platform=macOS' -derivedDataPath build/ci \
+            CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= \
+            > xcodebuild.log 2>&1
+          status=$?
+          grep -E "error:|Test Case.*(failed|skipped)|Executed|TEST " xcodebuild.log
+          exit $status

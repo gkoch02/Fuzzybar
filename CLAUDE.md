@@ -12,7 +12,8 @@
   `CustomPersonality.phrase`, and tests get UserDefaults from
   `scratchDefaults()`.
 - Tests go in the file for the unit or feature they test, not in a file per
-  review round.
+  review round. CI runs them twice: under SwiftPM, and hosted in the app
+  target (`xcodebuild test`, signed ad hoc), where the app-only ones run.
 - A new or renamed Swift file needs `xcodegen generate`;
   `Tests/BuildScriptTests` checks the project matches the disk.
 - `Tools/check_archive.sh` is shared with other PlumpBug repos: change only its
